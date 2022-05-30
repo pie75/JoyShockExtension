@@ -22,10 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef SUMMATOR_REGISTER_TYPES_H
-#define SUMMATOR_REGISTER_TYPES_H
+#ifndef JOYSHOCKEXTENSION_REGISTER_TYPES_H
+#define JOYSHOCKEXTENSION_REGISTER_TYPES_H
 
-void register_summator_types();
-void unregister_summator_types();
+#include <godot_cpp/core/class_db.hpp>
+using namespace godot;
 
-#endif // SUMMATOR_REGISTER_TYPES_H
+void initialize_joyshockextension_types(ModuleInitializationLevel p_level);
+void uninitialize_joyshockextension_types(ModuleInitializationLevel p_level);
+
+#endif // JOYSHOCKEXTENSION_REGISTER_TYPES_H

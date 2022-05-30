@@ -1,7 +1,7 @@
 # Godot 4+ specific ignores
 .godot/
 .vscode/
-game/bin/summator/*
+game/bin/joyshockextension/*
 .sconsign*.dblite
 
 # Binaries
@@ -22,3 +22,6 @@ bin
 *.includes
 *.idb
 *.exp
+
+# SDL2 files
+SDL*

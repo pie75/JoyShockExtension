@@ -23,31 +23,45 @@ SOFTWARE.
 */
 
 #include "register_types.h"
-#include "summator.h"
+
 #include <godot/gdnative_interface.h>
+
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/core/defs.hpp>
 #include <godot_cpp/godot.hpp>
 
-void register_summator_types()
+#include "joyshockextension.h"
+
+using namespace godot;
+
+void initialize_joyshockextension_types(ModuleInitializationLevel p_level)
 {
-	godot::ClassDB::register_class<Summator>();
+	if (p_level != MODULE_INITIALIZATION_LEVEL_CORE) {
+		return;
+	}
+
+	ClassDB::register_class<JoyShockExtension>();
 }
 
-void unregister_summator_types() {}
+void uninitialize_joyshockextension_types(ModuleInitializationLevel p_level)
+{
+	if (p_level != MODULE_INITIALIZATION_LEVEL_CORE) {
+		return;
+	}
+}
 
 extern "C"
 {
+// Initialization.
 
-	// Initialization.
-
-	GDNativeBool GDN_EXPORT summator_library_init(const GDNativeInterface *p_interface, const GDNativeExtensionClassLibraryPtr p_library, GDNativeInitialization *r_initialization)
+	GDNativeBool GDN_EXPORT example_library_init(const GDNativeInterface *p_interface, const GDNativeExtensionClassLibraryPtr p_library, GDNativeInitialization *r_initialization)
 	{
 		godot::GDExtensionBinding::InitObject init_obj(p_interface, p_library, r_initialization);
 
-		init_obj.register_scene_initializer(register_summator_types);
-		init_obj.register_scene_terminator(unregister_summator_types);
+			init_obj.register_initializer(initialize_joyshockextension_types);
+			init_obj.register_terminator(uninitialize_joyshockextension_types);
+			init_obj.set_minimum_library_initialization_level(MODULE_INITIALIZATION_LEVEL_CORE);
 
-		return init_obj.init();
+			return init_obj.init();
 	}
 }

@@ -43,14 +43,14 @@ sources = Glob("extension/src/*.cpp")
 
 if env["platform"] == "osx":
     library = env.SharedLibrary(
-        "game/bin/summator/libgdsummator.{}.{}.framework/libgdsummator.{}.{}".format(
+        "game/bin/joyshockextension/SDL2.framework/SDL2".format(
             env["platform"], env["target"], env["platform"], env["target"]
         ),
         source=sources,
     )
 else:
     library = env.SharedLibrary(
-        "game/bin/summator/libgdsummator.{}.{}.{}{}".format(
+        "game/bin/joyshockextension/SDL2".format(
             env["platform"], env["target"], env["arch_suffix"], env["SHLIBSUFFIX"]
         ),
         source=sources,
