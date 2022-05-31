@@ -1,0 +1,32 @@
+#ifndef INPUT_SENSOR_ENUMS_H
+#define INPUT_SENSOR_ENUMS_H
+
+enum class JoySensor {
+  JOY_SENSOR_INVALID = -1,
+  JOY_SENSOR_ACCEL = 0,
+  JOY_SENSOR_GYRO = 1,
+  SDL_MAX = 2, // SDL Supports Accel & Gyro only
+  JOY_SENSOR_MAGNET = 2, // VV unused, but reserved
+  JOY_SENSOR_INCLINE = 3,
+  JOY_SENSOR_MAX = 4 // the HID standard describes 4 sets of 3D Sensors
+}
+
+enum class JoySensorAxis {
+  JOY_SENSOR_INVALID = -1,
+  JOY_SENSOR_ACCEL_X = 0,
+  JOY_SENSOR_ACCEL_Y = 1,
+  JOY_SENSOR_ACCEL_Z = 2,
+  JOY_SENSOR_GYRO_X = 3,
+  JOY_SENSOR_GYRO_Y = 4,
+  JOY_SENSOR_GYRO_Z = 5,
+  SDL_MAX = 6,
+  JOY_SENSOR_MAGNET_X = 6,
+  JOY_SENSOR_MAGNET_Y = 7,
+  JOY_SENSOR_MAGNET_Z = 8,
+  JOY_SENSOR_INCLINE_X = 9,
+  JOY_SENSOR_INCLINE_Y = 10,
+  JOY_SENSOR_INCLINE_Z = 11,
+  JOY_SENSOR_MAX = 12
+}
+
+#endif // INPUT_SENSOR_ENUMS_H

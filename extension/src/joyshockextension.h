@@ -7,9 +7,14 @@
 #include <windows.h>
 #endif
 
-#include <godot_cpp/classes/ref.hpp>
-#include <godot_cpp/classes/input.hpp>
+#include "input_sensor_enums.h"
 
+#include <godot_cpp/classes/global_constants.hpp>
+#include <godot_cpp/classes/input.hpp>
+#include <godot_cpp/classes/ref.hpp>
+#include <godot_cpp/classes/viewport.hpp>
+
+#include <godot_cpp/core/binder_common.hpp>
 #include <godot_cpp/core/defs.hpp>
 
 #include <godot_cpp/variant/quaternion.hpp>
@@ -17,58 +22,48 @@
 
 using namespace godot;
 
-typedef struct IMU_STATE
-{
-	Vector3 accel;
-	Vector3 gyro;
-	Vector3 magnet;
-} IMU_STATE;
-
-typedef struct MOTION_STATE
-{
-	Quaternion quat;
-	Vector3 accel;
-	Vector3 grav;
-} MOTION_STATE;
-
-class JoyShockExtension : public Input
-{
-    GDCLASS(JoyShockExtension, Input);
-
+// Main loop process ?
+// Should this also serve as the SDL Wrapper? It will for now, I suppose.
+// Since we're initialising SDL when the plugin is loaded,
+// this should poll the SDL devices and update our Input singleton.
+// ...I think
+// Try to mirror JOYPAD_WINDOWS.h here maybe?
+class JoyShockExtension : public{
 protected:
-    static void _bind_methods();
+	JoyShockExtension() {}
 
 public:
-	// Constants
+	struct IMU_STATE {
+		Vector3 accelerometer;
+		Vector3 gyroscope;
+	} IMU_STATE;
 
-    JoyShockExtension();
-    ~JoyShockExtension();
+	struct MOTION_STATE {
+		Quaternion quat;
+		Vector3 accel;
+		Vector3 grav;
+	} MOTION_STATE;
 
-	// Functions
-/*	
-    virtual int32_t ConnectDevices() = 0;
-	virtual int32_t GetConnectedDeviceHandles(int32_t* deviceHandleArray, int32_t size) = 0;
-	virtual void DisconnectAndDisposeAll() = 0;
-	virtual IMU_STATE GetIMUState(int32_t deviceId) = 0;
-	virtual MOTION_STATE GetMotionState(int32_t deviceId) = 0;
-	virtual real_t GetLeftTrigger(int32_t deviceId) = 0;
-	virtual real_t GetRightTrigger(int32_t deviceId) = 0;
-	virtual real_t GetGyroX(int32_t deviceId) = 0;
-	virtual real_t GetGyroY(int32_t deviceId) = 0;
-	virtual real_t GetGyroZ(int32_t deviceId) = 0;
-	virtual real_t GetAccelX(int32_t deviceId) = 0;
-	virtual real_t GetAccelY(int32_t deviceId) = 0;
-	virtual real_t GetAccelZ(int32_t deviceId) = 0;
-	virtual real_t GetPollRate(int32_t deviceId) = 0;
-	virtual void ResetContinuousCalibration(int32_t deviceId) = 0;
-	virtual void StartContinuousCalibration(int32_t deviceId) = 0;
-	virtual void PauseContinuousCalibration(int32_t deviceId) = 0;
-	virtual void GetCalibrationOffset(int32_t deviceId, real_t& xOffset, real_t& yOffset, real_t& zOffset) = 0;
-	virtual void SetCalibrationOffset(int32_t deviceId, real_t xOffset, real_t yOffset, real_t zOffset) = 0;
-	virtual void SetCallback(void (*callback)(int32_t, IMU_STATE, IMU_STATE, real_t)) = 0;
-	virtual int32_t GetControllerType(int32_t deviceId) = 0;
-	virtual int32_t GetControllerColour(int32_t deviceId) = 0;
-*/
+	virtual ~JoyShockExtension() {}
+	static JoyShockExtension *get_new();
+
+	virtual int connect_devices() = 0;
+	void probe_joypads();
+	void process_joypads();
+
+	virtual Vector3 get_accelerometer(int device) = 0;
+	virtual Vector3 get_gyroscope(int device) = 0;
+
+	virtual int get_connected_device_handles(int *device_handle_array,
+			int size) = 0;
+	virtual void disconnect_all() = 0;
+
+private:
+	enum {
+		JOYPADS_MAX = 16,
+		JOY_SENSOR_COUNT = 2,
+		JOY_SENSOR_AXIS_COUNT = 6
+	}
 };
 
 #endif // JOYSHOCKEXTENSION_CLASS_H
