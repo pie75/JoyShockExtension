@@ -27,7 +27,7 @@ Then, we need to link the Singletons via Godot's internal controller count, usin
 6. ❎ Multiple controllers supported.
 
 ## Contributing
-I barely know what I'm doing, and I'm about as good at programming as I am at cooking (awful).  
+I barely know what I'm doing, and I'm about as good at programming as I am at cooking ([awful](https://cdn.discordapp.com/attachments/309861882351583233/892518367704018974/unknown.png)).  
 
 ### If you're able to help out, it would be greatly appreciated.  
 
