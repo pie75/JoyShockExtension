@@ -10,6 +10,9 @@ However, this extension is by nature designed to be a temporary solution, holdin
 ## Implementation
 The current idea is to extend Godot's Input singleton IF: possible. ELSE: mirror it, creating a separate SensorInput singleton that gets updated by SDL, mirroring how [`joypad_windows.h`](https://github.com/godotengine/godot/blob/master/platform/windows/joypad_windows.h) probes and processes joypads.
 Then to mirror how Input is processed into InputEvents which can be used by the Engine.  
+
+I think the Viewport polls the InputEvents at the physics framerate set in the game properties, and that causes a chain reaction down through Input, to the xInput/dInput backend.
+Whatever it is, the Extension needs to be linked to the Viewport class somehow.  
 I'm not really sure if that's exactly what happens but it seems to be about right.  
 
 After the inputs are in the Engine, end users need a way to access them.
@@ -22,9 +25,10 @@ Then, we need to link the Singletons via Godot's internal controller count, usin
 1. ❎ Input is polled from SDL2 
 2. ❎ Inputs are processed into Singleton
 3. ❎ InputEvents are generated from Singleton
-4. ❎ Raw IMU Data is made available to end user as Vector3 and axes.
-5. ❎ Data is filtered into motion data (Quaternions, Gravity, Acceleration) for end user.
-6. ❎ Multiple controllers supported.
+4. ❎ Viewport handles InputEvents
+5. ❎ Raw IMU Data is made available to end user as Vector3 and axes.
+6. ❎ Data is filtered into motion data (Quaternions, Gravity, Acceleration) for end user.
+7. ❎ Multiple controllers supported.
 
 ## Contributing
 I barely know what I'm doing, and I'm about as good at programming as I am at cooking ([awful](https://cdn.discordapp.com/attachments/309861882351583233/892518367704018974/unknown.png)).  
