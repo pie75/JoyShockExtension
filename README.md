@@ -13,7 +13,8 @@ Then to mirror how Input is processed into InputEvents which can be used by the 
 
 I think the Viewport polls the InputEvents at the physics framerate set in the game properties, and that causes a chain reaction down through Input, to the xInput/dInput backend.
 Whatever it is, the Extension needs to be linked to the Viewport class somehow.  
-I'm not really sure if that's exactly what happens but it seems to be about right.  
+~~I'm not really sure if that's exactly what happens but it seems to be about right.~~  
+Except, it really doesn't make sense for things to happen that way. It has to be the case that the input from the user is updated when the user gives it. Perhaps the input API puts data into the singleton on demand, and it's just that the singleton is checked at the physics framerate?  
 
 After the inputs are in the Engine, end users need a way to access them.
 Raw IMU data will be output as usable axes and Vector3, while filtered motion data will be given as Quaternion Orientation, Gravity, and Acceleration.
@@ -42,7 +43,7 @@ Right now everything is on Windows,
 If you can work on Mac, Linux, Android, iOS, or more - there isn't anything for you to port, but there will be in future!
 
 The "Style guide" is to [match godot](https://docs.godotengine.org/en/latest/community/contributing/code_style_guidelines.html) as closely as possible. That means trying to use clang-format. But I'm terrible at it myself.  
-Try to comment your code if you can, it'll be helpful when time comes to migrate anything into Godot.
+Try to comment any code you can - documenting what things do should be done in the code, much like how SDL has explanation paragraphs in its headers. This extension has no intention of being small or lightweight, so don't worry about that as long as what you've done can be explained.
 
 ## Building the extension
 1. Clone the extension recursively from this repository
